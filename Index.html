@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #0D0F1C;
+    --ink-soft: #161A2B;
+    --paper: #F2EEE6;
+    --amber: #E8A33D;
+    --lavender: #8C93B8;
+    --line: rgba(242,238,230,0.14);
+  }
+
+  *{ box-sizing: border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    height:100%;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+  }
+
+  /* subtle grain */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index: 5;
+  }
+
+  /* slow radial drift */
+  .glow{
+    position:fixed;
+    inset:0;
+    background: radial-gradient(circle at 30% 20%, rgba(232,163,61,0.10), transparent 45%),
+                radial-gradient(circle at 75% 80%, rgba(140,147,184,0.10), transparent 50%);
+    animation: drift 18s ease-in-out infinite alternate;
+    z-index: 0;
+  }
+  @keyframes drift{
+    from{ transform: translate(0,0) scale(1); }
+    to{ transform: translate(-2%, 2%) scale(1.05); }
+  }
+
+  .stage{
+    position:relative;
+    z-index: 10;
+    height: 100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 32px;
+  }
+
+  .mark{
+    width: 86px;
+    height: 86px;
+    margin-bottom: 36px;
+  }
+  .mark path{
+    fill:none;
+    stroke: var(--amber);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-dasharray: 240;
+    stroke-dashoffset: 240;
+    animation: draw 2.6s cubic-bezier(.65,0,.35,1) 0.3s forwards;
+  }
+  .mark circle{
+    fill: var(--amber);
+    opacity: 0;
+    animation: appear 0.6s ease 2.6s forwards;
+  }
+  @keyframes draw{ to{ stroke-dashoffset: 0; } }
+  @keyframes appear{ to{ opacity: 1; } }
+
+  .eyebrow{
+    font-family:'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--lavender);
+    margin-bottom: 22px;
+    opacity: 0;
+    animation: rise 0.8s ease 0.2s forwards;
+  }
+
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    line-height: 1.04;
+    margin: 0 0 22px;
+    max-width: 14ch;
+    opacity: 0;
+    animation: rise 0.9s ease 0.4s forwards;
+  }
+  h1 em{
+    font-style: italic;
+    font-weight: 300;
+    color: var(--amber);
+  }
+
+  p.sub{
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(242,238,230,0.62);
+    max-width: 38ch;
+    margin: 0 0 44px;
+    opacity: 0;
+    animation: rise 0.9s ease 0.6s forwards;
+  }
+
+  @keyframes rise{
+    from{ opacity:0; transform: translateY(10px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  form{
+    display:flex;
+    width: 100%;
+    max-width: 380px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+    opacity:0;
+    animation: rise 0.9s ease 0.8s forwards;
+  }
+  input[type="email"]{
+    flex:1;
+    background:none;
+    border:none;
+    outline:none;
+    color: var(--paper);
+    font-family:'Inter', sans-serif;
+    font-size: 15px;
+    padding: 8px 4px;
+  }
+  input[type="email"]::placeholder{ color: rgba(242,238,230,0.35); }
+
+  button{
+    background:none;
+    border:none;
+    color: var(--amber);
+    font-family:'Inter', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor:pointer;
+    padding: 8px 4px;
+    transition: opacity 0.2s ease;
+  }
+  button:hover{ opacity: 0.7; }
+  button:focus-visible, input:focus-visible{ outline: 1px solid var(--amber); outline-offset: 4px; }
+
+  .note{
+    margin-top: 18px;
+    font-size: 13px;
+    color: rgba(242,238,230,0.4);
+    min-height: 18px;
+    opacity:0;
+    animation: rise 0.9s ease 1s forwards;
+  }
+
+  footer{
+    position:fixed;
+    bottom: 26px;
+    left:0; right:0;
+    text-align:center;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(242,238,230,0.28);
+    z-index: 10;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="glow"></div>
+
+  <div class="stage">
+    <svg class="mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20,70 Q20,20 50,20 Q80,20 80,55 Q80,80 55,80" />
+      <circle cx="55" cy="80" r="3.2"/>
+    </svg>
+
+    <div class="eyebrow">Currently in the works</div>
+    <h1>Something <em>quietly</em><br>worth the wait.</h1>
+    <p class="sub">We're building this one slowly, on purpose. Leave your email and we'll let you know the moment it's ready.</p>
+
+    <form id="notifyForm">
+      <input type="email" id="emailInput" placeholder="you@example.com" required autocomplete="email">
+      <button type="submit">Notify me</button>
+    </form>
+    <div class="note" id="formNote"></div>
+  </div>
+
+  <footer>Back soon</footer>
+
+  <script>
+    const form = document.getElementById('notifyForm');
+    const note = document.getElementById('formNote');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const email = document.getElementById('emailInput').value.trim();
+      if(email){
+        note.textContent = "Thanks — we'll be in touch.";
+        form.reset();
+      }
+    });
+  </script>
+
+</body>
+</html>
